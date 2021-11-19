@@ -4,9 +4,14 @@ import Home from './pages/Home';
 import SingIn from './pages/SingIn';
 import SingUp from './pages/SinUp';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { useState } from 'react';
+import UserContext from './context/UserContext';
 
 export default function App() {
+  const [user, setUser] = useState({});
+
   return (
+  <UserContext.Provider value={{ user, setUser }}>
     <Router>
       <Routes>
         <Route path = "/" exact element = {<Cover />} />
@@ -15,5 +20,6 @@ export default function App() {
         <Route path = "/sing-up" exact element = {<SingUp />} />
       </Routes>
     </Router>
+  </UserContext.Provider>
   );
 }
