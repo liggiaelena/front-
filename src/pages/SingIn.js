@@ -1,6 +1,6 @@
 import { Body, InputBox, ButtomBox, Buttom, Title, AlertMessage} from '../styles/LoginStyled'
 import Loader from 'react-loader-spinner';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router";
 import { postLogIn } from '../service';
 import UserContext from '../context/UserContext';
@@ -23,10 +23,11 @@ export default function SingIn(){
         postLogIn(body)
             .then((res)=>{
                 setUser({ 
-                    id: res.data.id,
+                    userId: res.data.id,
                     token: res.data.token, 
                     name: res.data.name
                 })
+                localStorage.setItem("login", JSON.stringify({...res.data}));
                 setLoading(false);
                 navigate('/home')
             })
@@ -42,6 +43,14 @@ export default function SingIn(){
             })
 
     }
+
+    useEffect(()=>{
+        if(localStorage.getItem("login")){
+            setUser(JSON.parse(localStorage.getItem("login")))
+            navigate('/home')
+        }
+// eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return(
         <Body>

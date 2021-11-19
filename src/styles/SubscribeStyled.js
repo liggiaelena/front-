@@ -1,40 +1,11 @@
-import { useContext } from "react";
-import UserContext from "../context/UserContext";
 import styled from "styled-components";
-import { useNavigate } from "react-router";
-
-export default function Home(){
-    const { user } = useContext(UserContext)
-    let navigate = useNavigate();
-
-    return(
-        <Body>
-        <Container>
-            <h1>Bom te ver por aqui, {user.name}.</h1>
-            <p>Você ainda não assinou um plano, que tal começar agora?</p>
-            
-        </Container>
-            <PlanContainer>
-                <img src="../midia/image04.jpg" alt=""/>
-                <p>Você recebe um box por semana.</p>   
-                <p>Ideal para quem quer exercer a gratidão todos os dias.</p>
-                <Buttom onClick={()=> navigate("/subscribe")}>Assinar</Buttom>
-            </PlanContainer>
-            <PlanContainer>
-                <img src="../midia/image02.jpg" alt=""/>
-                <p>Você recebe um box por mês. </p>   
-                <p>Ideal para quem está começando agora.</p>
-                <Buttom onClick={()=> navigate("/subscribe")}>Assinar</Buttom>
-            </PlanContainer>
-    </Body>
-    );
-}
 
 const Body = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
 `
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -62,7 +33,7 @@ const Container = styled.div`
 `
 
 const PlanContainer = styled.div`
-    background-color: #E5CDB3;
+    background-color: #fff;
     width: 95vw;
     min-height: 400px;
     border-radius: 25px;
@@ -75,12 +46,37 @@ const PlanContainer = styled.div`
             width: 100%;
             border-radius: 25px;
         }
+
+`
+const Question = styled.div`
+    display: flex;
+    justify-content: space-between;
+    padding-right: 8px;
+    align-items: center;
+    width: 80%;
+    margin-top: 10px;
+    background-color: #E0D1ED;
+    color: #4D65A8;
+    border-radius: 5px;
+    height: 40px;
+    
     p{
-        color: #4D65A8;
+        font-family: 'Roboto';
         font-size: 18px;
         font-weight: 700;
-        width: 87%;
+        color:#4D65A8;
+        margin-left: 18px;
     }
+
+`
+const Mark = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin-top: 10px;
+    background-color: #E0D1ED;
+    color: #4D65A8;
 
 `
 
@@ -99,3 +95,11 @@ const Buttom = styled.div`
     margin-bottom: 10px;
 
 `
+export{
+    Buttom,
+    PlanContainer,
+    Container,
+    Body,
+    Question,
+    Mark
+}
