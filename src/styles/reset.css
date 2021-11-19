@@ -51,10 +51,7 @@ table {
 
 body{
     font-family: 'Roboto', sans-serif;
-    height: 100%;
-    width: 100%;
-    overflow-x: hidden;
-    background-color: #927AE4;
+    background-color: #6D7CE4;
 }
 input, button{
     border: none;

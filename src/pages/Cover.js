@@ -9,7 +9,7 @@ export default function Cover(){
         <Container>
             <h1>Bem vindo ao GratiBox</h1>
             <p>Receba em casa um box com chás, produtos organicos, incensos e muito mais...</p>
-            <img src="../midia/image1.png" alt=""/>
+            <img src="../midia/image05.png" alt=""/>
         </Container>
         <ButtonsBox>
             <ButtomSingUp onClick={()=> navigate("/sing-up")}>Quero começar</ButtomSingUp>
@@ -23,26 +23,28 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 100vw;
   height: auto;
   color: #fff;
-  background-color: #927AE4;
+  background-color: #6D7CE4;
+
     h1{
         font-weight: 700;
         font-size: 28px;
-        margin-top: 50px;
+        margin-top: 40px;
         text-align: center;
     }
     p{
         font-weight: 300;
         font-size: 18px;
         width: 70%;
-        margin-top: 30px;
+        margin-top: 25px;
         text-align: center;
     }
     img{
-        width: 100%;
+        width: 100vw;
+        overflow-x: hidden;
     }
 
 `
@@ -50,8 +52,7 @@ const ButtonsBox = styled.div`
   display: flex;
   flex-direction: column;
   color: #fff;
-  width: 100vw;
-  height: auto;
+  width: 95vw;
   align-items: center;
 
 `
@@ -60,7 +61,7 @@ const ButtomSingUp = styled.div`
     border-radius: 10px;
     font-size:18px ;
     font-weight: 700;
-    width: 202px;
+    width: 200px;
     height: 45px;
     display: flex;
     justify-content: center;
@@ -77,6 +78,6 @@ const ButtomLogIn = styled.div`
 const Body = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color: #6158A9;
+  background-color:#4D65A8;
 
 `
