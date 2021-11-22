@@ -1,11 +1,22 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import UserContext from "../context/UserContext";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
+import { getSubscriptions } from "../service";
 
-export default function Home(){
+export default function Home({setSubscriptionsInfo}){
     const { user } = useContext(UserContext)
     let navigate = useNavigate();
+
+    useEffect(()=>{
+        const promise = getSubscriptions(user.token)
+                promise.then((res)=>{
+                    setSubscriptionsInfo(res.data);
+                    console.log(res.data)
+                    navigate("/plan");
+                })
+// eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return(
         <Body>

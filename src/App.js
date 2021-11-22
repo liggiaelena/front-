@@ -12,18 +12,19 @@ import Plan from './pages/Plan';
 
 export default function App() {
   const [user, setUser] = useState({});
+  const [ subscriptionsInfo, setSubscriptionsInfo] = useState({});
 
   return (
   <UserContext.Provider value={{ user, setUser }}>
     <Router>
       <Routes>
         <Route path = "/" exact element = {<Cover />} />
-        <Route path = "/home" exact element = {<Home />} />
+        <Route path = "/home" exact element = {<Home setSubscriptionsInfo={setSubscriptionsInfo}/>} />
         <Route path = "/sing-in" exact element = {<SingIn />} />
         <Route path = "/sing-up" exact element = {<SingUp />} />
         <Route path = "/subscribe" exact element = {<SubscribePlan />} />
         <Route path = "/subscribe-delivery" exact element = {<SubscribeDelivery />} />
-        <Route path = "/plan" exact element = {<Plan />} />
+        <Route path = "/plan" exact element = {<Plan subscriptionsInfo={subscriptionsInfo}/>} />
       </Routes>
     </Router>
   </UserContext.Provider>
