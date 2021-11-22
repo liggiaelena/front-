@@ -24,7 +24,7 @@ export default function App() {
         <Route path = "/sing-up" exact element = {<SingUp />} />
         <Route path = "/subscribe" exact element = {<SubscribePlan />} />
         <Route path = "/subscribe-delivery" exact element = {<SubscribeDelivery />} />
-        <Route path = "/plan" exact element = {<Plan subscriptionsInfo={subscriptionsInfo}/>} />
+        <Route path = "/plan" exact element = {<Plan subscriptionsInfo={subscriptionsInfo} setSubscriptionsInfo={setSubscriptionsInfo}/>} />
       </Routes>
     </Router>
   </UserContext.Provider>

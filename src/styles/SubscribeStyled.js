@@ -106,6 +106,38 @@ const InfoDates = styled.div`
     }
 
 `
+const DisplayFlex = styled.div`
+    display: flex;
+    flex-direction: column;
+
+
+`
+const ChooseContainer =styled.div`
+    display: ${(props)=> props.display? "flex": "none"};
+    flex-direction: column;
+    align-items: flex-end;
+    width: ${(props)=> props.width? "100%": "80%"};
+    max-height: 150px;
+    overflow-y: scroll;
+`
+const Choose = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    height: 30px;height: 30px;
+    min-height: 30px;
+    background-color: #E0D1ED;
+    p{
+        font-family: 'Roboto';
+        font-size: 18px;
+        font-weight: 700;
+        color:#4D65A8;
+        margin-right: 18px;
+        
+    }
+
+`
 
 const InfoState = styled.div`
     display: flex;
@@ -210,5 +242,8 @@ export{
     InfoState,
     Info,
     InfoDates,
-    ProductsList
+    ProductsList,
+    Choose,
+    ChooseContainer,
+    DisplayFlex,
 }

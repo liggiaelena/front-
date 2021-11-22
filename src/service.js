@@ -22,8 +22,34 @@ function getSubscriptions(token){
   return promise;
 }
 
+function postDelivery(body){
+  const promise = axios.post(`${URL}/delivery-days`, body);
+  return promise;
+}
+
+function postSubscription(token, body){
+  const config = createHeaders(token);
+  const promise = axios.post(`${URL}/subscriptions`, body, config);
+  return promise;
+}
+
+function postSubscribe(token, body){
+  const config = createHeaders(token);
+  const promise = axios.post(`${URL}/subscribe`, body, config);
+  return promise;
+}
+
+function getStates(){
+  const promise = axios.get(`${URL}/states`);
+  return promise;
+}
+
 export{
     postSingUp,
     postLogIn,
-    getSubscriptions
+    getSubscriptions,
+    postDelivery,
+    postSubscription,
+    postSubscribe,
+    getStates,
 }

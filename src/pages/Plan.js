@@ -1,27 +1,12 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import {Buttom, PlanContainer, Container, Body, Info, InfoDates, ProductsList } from '../styles/SubscribeStyled'
-
-function nextDate(plan, dayName){
-    const nextdays =[];
-    const d = new Date()
-    if(plan === "mensal"){
-        const day = Number(dayName.slice(-2));
-        console.log(day, d.getDay())
-        if(d.getDate() > day){
-            const aux =new Date(`${day}/${d.getMonth()+2}/${d.getFullYear()}`)
-            console.log(aux.getDay())
-            nextdays.push();
-        }
-        else{
-
-        }
-
-    }
-}
+import { getSubscriptions } from '../service';
+import nextDate from './calcDate';
 
 export default function Plan(props){
+    const [nextdays, setNextdays] = useState([]);
     const { user } = useContext(UserContext);
     let navigate = useNavigate();
     const {
@@ -30,9 +15,27 @@ export default function Plan(props){
         registration_date,
         products,
     } = props.subscriptionsInfo;
+    const setSubscriptionsInfo = props.setSubscriptionsInfo;
+
     const d = new Date(registration_date)
     const date = `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
-    nextDate(plans_name, delivery_days_name)
+
+    function logout(){
+        localStorage.removeItem("login");
+        navigate("/")
+    }
+    function render(){
+        const promise =  getSubscriptions(user.token)
+                promise.then((res)=>{
+                    setSubscriptionsInfo(res.data);
+                    setNextdays(nextDate(plans_name, delivery_days_name))
+                })
+    }
+
+    useEffect(()=>{
+        render();
+// eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <Body>
@@ -52,13 +55,19 @@ export default function Plan(props){
                 </Info>
                 <InfoDates>
                     <h3>Próximas entregas: </h3>
-                    <p>@tipo de plano</p>
+                    {nextdays?.map((n)=> {
+                        let aux = new Date(n)
+                        let dateNext = `${aux.getDate()}/${aux.getMonth()+1}/${aux.getFullYear()}`;
+                         return (<p>{dateNext}</p>);
+                    })}
+                    
                 </InfoDates>
                 <ProductsList>
-                    {products.map((p)=> <p>{p.name}</p>)}
+                    {products?.map((p)=> <p key={p.name}>{p.name}</p>)}
                 </ProductsList>
             </PlanContainer>
-            <Buttom size="250px" heigth="60px" onClick={()=> navigate("/subscribe")}>Avaliar entregas</Buttom>
+            <Buttom size="250px" heigth="60px">Avaliar entregas</Buttom>
+            <Buttom size="200px" heigth="60px" onClick={logout}>Deslogar</Buttom>
     </Body>
     );
 }
