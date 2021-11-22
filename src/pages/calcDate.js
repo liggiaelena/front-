@@ -20,7 +20,6 @@ export default function nextDate(plan, dayName){
                 nextdays.push(x)
             }
 
-            console.log(nextdays)
             for(let i=0; i<2; i++){
                 let aux2 = aux.setMonth(aux.getMonth()+1)
                 nextdays.push(aux2);

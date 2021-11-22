@@ -12,7 +12,6 @@ export default function Home({setSubscriptionsInfo}){
         const promise = getSubscriptions(user.token)
                 promise.then((res)=>{
                     setSubscriptionsInfo(res.data);
-                    console.log(res.data)
                     navigate("/plan");
                 })
 // eslint-disable-next-line react-hooks/exhaustive-deps
