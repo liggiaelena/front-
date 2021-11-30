@@ -12,19 +12,19 @@ import Home from './pages/Home';
 
 export default function App() {
   const [user, setUser] = useState(JSON.parse(window.localStorage.getItem('user')) || {});
-  const [ subscriptionsInfo, setSubscriptionsInfo] = useState({});
+  const [subscriptionsInfo, setSubscriptionsInfo] = useState(JSON.parse(window.localStorage.getItem('SubscriptionsInfo')) || {});
 
   return (
   <UserContext.Provider value={{ user, setUser }}>
     <Router>
       <Routes>
         <Route path = "/" exact element = {<Cover />} />
-        <Route path = "/home" exact element = {<Subscribe setSubscriptionsInfo={setSubscriptionsInfo}/>} />
+        <Route path = "/subscribe" exact element = {<Subscribe />} />
         <Route path = "/sing-in" exact element = {<SingIn />} />
         <Route path = "/sing-up" exact element = {<SingUp />} />
         <Route path = "/subscribe" exact element = {<SubscribePlan />} />
         <Route path = "/subscribe-delivery" exact element = {<SubscribeDelivery />} />
-        <Route path = "/plan" exact element = {<Home subscriptionsInfo={subscriptionsInfo} setSubscriptionsInfo={setSubscriptionsInfo}/>} />
+        <Route path = "/home" exact element = {<Home subscriptionsInfo={subscriptionsInfo} setSubscriptionsInfo={setSubscriptionsInfo}/>} />
       </Routes>
     </Router>
   </UserContext.Provider>

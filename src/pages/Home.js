@@ -29,8 +29,10 @@ export default function Home(props){
         const promise =  getSubscriptions(user.token)
                 promise.then((res)=>{
                     setSubscriptionsInfo(res.data);
-                    setNextdays(nextDate(plans_name, delivery_days_name))
+                    window.localStorage.setItem("SubscriptionsInfo", JSON.stringify(res.data))
+                    console.log(res.data)
                 })
+        setNextdays(nextDate(plans_name, delivery_days_name))
     }
 
     useEffect(()=>{
