@@ -27,7 +27,7 @@ export default function SingIn(){
                     token: res.data.token, 
                     name: res.data.name
                 })
-                localStorage.setItem("login", JSON.stringify({...res.data}));
+                localStorage.setItem("user", JSON.stringify({...res.data}));
                 setLoading(false);
                 navigate('/home')
             })
@@ -45,8 +45,7 @@ export default function SingIn(){
     }
 
     useEffect(()=>{
-        if(localStorage.getItem("login")){
-            setUser(JSON.parse(localStorage.getItem("login")))
+        if(localStorage.getItem("user")){
             navigate('/home')
         }
 // eslint-disable-next-line react-hooks/exhaustive-deps

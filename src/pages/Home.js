@@ -1,111 +1,74 @@
-import { useContext, useEffect } from "react";
-import UserContext from "../context/UserContext";
-import styled from "styled-components";
-import { useNavigate } from "react-router";
-import { getSubscriptions } from "../service";
+import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import UserContext from '../context/UserContext';
+import {Buttom, PlanContainer, Container, Body, Info, InfoDates, ProductsList } from '../styles/SubscribeStyled'
+import { getSubscriptions } from '../service';
+import nextDate from './calcDate';
 
-export default function Home({setSubscriptionsInfo}){
-    const { user } = useContext(UserContext)
+export default function Home(props){
+    const [nextdays, setNextdays] = useState([]);
+    const { user } = useContext(UserContext);
     let navigate = useNavigate();
+    const {
+        plans_name,
+        delivery_days_name,
+        registration_date,
+        products,
+    } = props.subscriptionsInfo;
+    const setSubscriptionsInfo = props.setSubscriptionsInfo;
 
-    useEffect(()=>{
-        const promise = getSubscriptions(user.token)
+    const d = new Date(registration_date)
+    const date = `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
+
+    function logout(){
+        localStorage.removeItem("user");
+        navigate("/")
+    }
+
+    function render(){
+        const promise =  getSubscriptions(user.token)
                 promise.then((res)=>{
                     setSubscriptionsInfo(res.data);
-                    navigate("/plan");
+                    setNextdays(nextDate(plans_name, delivery_days_name))
                 })
+    }
+
+    useEffect(()=>{
+        render();
 // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    return(
+    return (
         <Body>
         <Container>
             <h1>Bom te ver por aqui, {user.name}.</h1>
-            <p>Você ainda não assinou um plano, que tal começar agora?</p>
-            
+            <p>“Agradecer é arte de atrair coisas boas”</p>   
         </Container>
             <PlanContainer>
-                <img src="../midia/image04.jpg" alt=""/>
-                <p>Você recebe um box por semana.</p>   
-                <p>Ideal para quem quer exercer a gratidão todos os dias.</p>
-                <Buttom onClick={()=> navigate("/subscribe")}>Assinar</Buttom>
+                <img src="../midia/image03.jpg" alt=""/> 
+                <Info>
+                    <h3>Plano: </h3>
+                    <p>{plans_name}</p>
+                </Info>
+                <Info>
+                    <h3>Data da assinatura:</h3>
+                    <p>{date}</p>
+                </Info>
+                <InfoDates>
+                    <h3>Próximas entregas: </h3>
+                    {nextdays?.map((n)=> {
+                        let aux = new Date(n)
+                        let dateNext = `${aux.getDate()}/${aux.getMonth()+1}/${aux.getFullYear()}`;
+                         return (<p key={aux}>{dateNext}</p>);
+                    })}
+                    
+                </InfoDates>
+                <ProductsList>
+                    {products?.map((p)=> <p key={p.name}>{p.name}</p>)}
+                </ProductsList>
             </PlanContainer>
-            <PlanContainer>
-                <img src="../midia/image02.jpg" alt=""/>
-                <p>Você recebe um box por mês. </p>   
-                <p>Ideal para quem está começando agora.</p>
-                <Buttom onClick={()=> navigate("/subscribe")}>Assinar</Buttom>
-            </PlanContainer>
+            <Buttom size="250px" heigth="60px">Avaliar entregas</Buttom>
+            <Buttom size="200px" heigth="60px" onClick={logout}>Deslogar</Buttom>
     </Body>
     );
 }
-
-const Body = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100vw;
-  height: auto;
-  color: #fff;
-  background-color: #6D7CE4;
-
-    h1{
-        font-weight: 700;
-        font-size: 28px;
-        margin-top: 40px;
-        text-align: center;
-    }
-    p{
-        font-weight: 300;
-        font-size: 18px;
-        width: 70%;
-        margin: 30px 0;
-        text-align: center;
-    }
-    
-`
-
-const PlanContainer = styled.div`
-    background-color: #E5CDB3;
-    width: 95vw;
-    min-height: 400px;
-    border-radius: 25px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 50px;
-    margin-top: 20px;
-    img{
-            width: 100%;
-            border-radius: 25px;
-        }
-    p{
-        color: #4D65A8;
-        font-size: 18px;
-        font-weight: 700;
-        width: 87%;
-    }
-
-`
-
-const Buttom = styled.div`
-    display: flex;
-    font-weight: 500;
-    font-size: 24px;
-    justify-content: center;
-    align-items: center;
-    background-color: #8C97EA;
-    width: 168px;
-    height: 40px;
-    border-radius: 10px;
-    color: #fff;
-    margin-top: 17px;
-    margin-bottom: 10px;
-
-`
